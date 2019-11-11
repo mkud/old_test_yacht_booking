@@ -1,0 +1,13 @@
+<p>from: <strong>{{search_filter.GetDepartDate().strftime('%Y-%m-%d')}}</strong> to: <strong>{{search_filter.GetFinishDate().strftime('%Y-%m-%d')}}</strong></p>
+	<p>current_page: <strong>{{search_filter.current_page}}</strong> from <strong>{{total_pages}}</strong></p>
+	<p>total count: <strong>more than {{total_count}}</strong></p>
+<p>
+{% for n in range(total_pages) %}
+	{% if (search_filter.current_page == (n+1)) %}
+		<span style="margin-left: 5px;">{{(n+1)}}</span>
+	{% else %}
+		<a href="search?{{search_filter.PutToGetStringWithNewNumPage(n+1)}}" style="margin-left: 5px;">{{(n+1)}}</a>
+	{% endif %}
+{% endfor %}
+</p>
+<hr>

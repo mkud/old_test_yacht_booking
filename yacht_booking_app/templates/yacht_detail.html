@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Search Results</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<p>from: <strong>{{search_filter_one_boat.GetDepartDate().strftime('%Y-%m-%d')}}</strong> to: <strong>{{search_filter_one_boat.GetFinishDate().strftime('%Y-%m-%d')}}</strong></p>
+	<p>depart from: <strong>{{search_filter_one_boat.source_place}}</strong></p>
+	<hr>
+
+{% if (boat is none) %}
+<p>Boat is busy. check search one more time</p>
+{% else %}
+<table>
+	<tr>
+		<td colspan="2">
+			<img src="{{boat.main_picture}}">
+			
+			<div style="display: none;">
+				{% for picture in boat.pictures %}
+					<img src="{{picture}}">
+				{% endfor %}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		{% if (boat.id_operator == 1) %}
+			<img src="static/company_logos/sedna.png" style="width:100px;">
+		{% elif (boat.id_operator == 2)%}
+			<img src="static/company_logos/nausys.png" style="width:100px;">
+		{% endif %}
+		</td>
+	</tr>
+	<tr>
+		<td>Name - <strong>{{boat.params["Name"]}}</strong></td>
+		<td>Model - <strong>{{boat.params["Model"]}}({{boat.params["Type"]}})</strong></td>
+	</tr>
+	<tr>
+		<td>Year of production - <strong>{{boat.params["Year"]}}</strong></td>
+		<td>Length - <strong>{{boat.params["Length"]}}</strong></td>
+	</tr>
+	<tr>
+		<td>Cabins - <strong>{{boat.params.get("Single cabins", 0)|int + boat.params.get("Double cabins", 0)|int}}</strong></td>
+		<td>WC - <strong>{{boat.params["WC / Shower"]}}</strong></td>
+	</tr>
+	<tr>
+		<td colspan="2">Berths - <strong>{{boat.params["Berths"]}}</strong></td>
+	</tr>
+	<tr>
+		<td colspan="2">Price - <strong style="text-decoration:line-through;">{{boat.price_from_pricelist|curency_format}}</strong> 
+								<strong style="color: red; font-size: larger;">{{boat.price_for_client|curency_format}}</strong>
+								<strong style="color: red;">( -{{boat.discount}}% )</strong></td>
+	</tr>
+	<tr>
+		<td colspan="2"><a href='book_yacht?'>Book now</a></td>
+	</tr>
+</table>
+{% endif %}
+	
+</body>
+</html>

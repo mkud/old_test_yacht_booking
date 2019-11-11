@@ -1,0 +1,21 @@
+<table>
+	<tr>
+		<th>Date from</th>
+		<th>Date To</th>
+		<th>When booked</th>
+		<th>Boat info</th>
+		<th>Actions</th>
+	</tr>
+
+{% for book in result %}
+	<tr>
+		<td>{{book[3]}}</td>
+		<td>{{book[4]}}</td>
+		<td>{{book[5]}}</td>
+		<td>Boat HERE!!</td>
+		<td><a href='book_yacht?id_book='>Pay</a><br>
+		<a href='cancel_book?id_book='>Cancel</a></td>
+	</tr>
+{% endfor %} 
+
+</table>

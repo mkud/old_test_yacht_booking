@@ -1,0 +1,10 @@
+#!/usr/bin/python
+'''
+Standart script for WSGI application
+'''
+
+from flup.server.fcgi import WSGIServer
+from service import app
+
+if __name__ == '__main__':
+   WSGIServer(app).run()

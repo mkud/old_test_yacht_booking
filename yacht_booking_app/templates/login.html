@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" type="text/css" href="static/jquery-ui.min.css">
+<script src="static/jquery-3.2.0.min.js"></script>
+<script src="static/jquery.ui.widget.js"></script>
+<script src="static/jquery-ui.min.js"></script>
+
+</head>
+
+<body>
+	<h1>Sign In</h1>
+	<form action="" method="post" name="login">
+		{{login_form.hidden_tag()}}
+		<p>
+			Please enter your Email:<br> {{login_form.email(size=80)}}<br>
+			{% for error in login_form.errors.email %} 
+				<span style="color: red;">[{{error}}]</span>
+			{% endfor %}<br>
+			Please enter your Password:<br>
+			{{login_form.password(size=80)}}<br> 
+			{% for error in login_form.errors.password %} 
+				<span style="color: red;">[{{error}}]</span>
+			{% endfor %}<br>
+		</p>
+		<p>{{login_form.remember_me}} Remember Me</p>
+		<p>{{login_form.login}}</p>
+	</form>
+	<hr>
+	<form action="" method="post" name="register">
+		{{register_form.hidden_tag()}}
+		<p>
+			Please enter your Email:<br> {{register_form.email(size=80)}}<br>
+			{% for error in register_form.errors.email %} 
+				<span style="color: red;">[{{error}}]</span>
+			{% endfor %}<br>
+			
+			Please enter your Password:<br>
+			{{register_form.password(size=80)}}<br> 
+			{% for error in register_form.errors.password %} 
+				<span style="color: red;">[{{error}}]</span>
+			{% endfor %}<br>
+			
+			Please confirm your Password:<br>
+			{{register_form.confirm_password(size=80)}}<br> 
+			{% for error in register_form.errors.confirm_password %} 
+				<span style="color: red;">[{{error}}]</span>
+			{% endfor %}<br>
+			
+			Please enter your First Name:<br>
+			{{register_form.first_name(size=80)}}<br> 
+			{% for error in register_form.errors.first_name %} 
+				<span style="color: red;">[{{error}}]</span>
+			{% endfor %}<br>
+
+			Please enter your Second Name:<br>
+			{{register_form.second_name(size=80)}}<br> 
+			{% for error in register_form.errors.second_name %} 
+				<span style="color: red;">[{{error}}]</span>
+			{% endfor %}<br>
+		</p>
+		<p>{{register_form.register}}</p>
+	</form>
+</body>
+</html>
+

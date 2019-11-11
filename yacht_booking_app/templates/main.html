@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Main Page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" type="text/css" href="static/jquery-ui.min.css">
+<script src="static/jquery-3.2.0.min.js"></script>
+<script src="static/jquery.ui.widget.js"></script>
+<script src="static/jquery-ui.min.js"></script>
+
+<script>
+	function OnLoad(){
+		$( "#place_name" ).autocomplete({
+		    source: function( request, response ) {
+		        $.ajax({
+		            dataType: "json",
+		            type : 'POST',
+		            url: 'get_places',
+		            data: {text: request.term},
+		            success: function(data) {
+		                //$('input.suggest-user').removeClass('ui-autocomplete-loading');  
+		                // hide loading image
+		                response( $.map( data, function(item) {
+		                	return item[1] + "(~" + item[4] + ")";
+		                }));
+		            },
+		            error: function(data) {
+		                //$('input.suggest-user').removeClass('ui-autocomplete-loading');  
+		            }
+		        });
+		    },
+		    minLength: 3,
+		    search  : function(){$(this).addClass('ui-autocomplete-loading');},
+		    open    : function(){$(this).removeClass('ui-autocomplete-loading');}
+		});
+		$( "#datepicker" ).datepicker({dateFormat: "dd.mm.yy", minDate: 1, beforeShowDay: function(dt){return [dt.getDay()==5, 1,""];}});
+	}
+	
+</script>
+
+
+</head>
+
+<body onLoad='OnLoad();'>
+	<label for="place_name">Place (check - 'Cro' and 'Cre'. When 'Cre' we need to make difference ): </label>
+	<input type="text" id="place_name">
+	<p>Date From: <input type="text" id="datepicker"></p>
+	<p>Count of weeks: <input type="text" id="count_of_weeks"></p>
+	<a href="search?source_place=Croatia&depart_date=2017-09-02&count_week=1&results_per_page=10&current_page=1">Search</a>
+	<p>
+	Current user: 
+	{% if current_user.is_authenticated %}
+		Name: {{current_user.email}}
+		<a href='logout'>Logout</a>
+		
+		{% if current_user.count_unfinished_books > 0 %}
+			<a href="unfinished_books" style='color:red;'>Unfinished booking is presented</a>
+		{% endif %}		
+	{% else %}
+		not authentificated
+		<a href='login'>Login</a>
+	{% endif %}
+	</p>
+</body>
+</html>

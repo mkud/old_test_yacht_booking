@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Search Results</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+	var source = new EventSource("/get_search_result" + window.location.search);
+	var progress_step = 50;
+	var full_count = 2;
+	var cur_count = 0;
+	source.onmessage = function(event) {
+		cur_count++;
+		if (cur_count % 2) {
+			$('#progress-bar').css('width', ((cur_count + 1) / 2 * progress_step) + '%').attr('aria-valuenow', (cur_count + 1) / 2 * progress_step);
+			$('#progress-text').html(((cur_count + 1) / 2) + " from " + full_count);
+			$('#result-area').append(event.data);
+		} else {
+			$('#header-area').html(event.data);
+		}
+		if (cur_count / 2 * progress_step == 100) {
+			source.close();
+			$('#progress-text').html("Completed");
+		}
+	}
+</script>
+</head>
+<body>
+	<div id="progress-text">0 from 2</div>
+	<div class="progress" style="width: 50%; margin: 50px;">
+		<div id="progress-bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+	</div>
+	<hr>
+	<div id="header-area"></div>
+
+	<div id="result-area"></div>
+</body>
+</html>

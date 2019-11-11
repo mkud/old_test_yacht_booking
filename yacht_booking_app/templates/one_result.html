@@ -1,0 +1,47 @@
+{% for boat in result.boats_sorted %}
+<table>
+	<tr>
+		<td colspan="2">
+			<img src="{{boat.main_picture}}">
+			
+			<div style="display: none;">
+				{% for picture in boat.pictures %}
+					<img src="{{picture}}">
+				{% endfor %}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		{% if (boat.id_operator == 1) %}
+			<img src="static/company_logos/sedna.png" style="width:100px;">
+		{% elif (boat.id_operator == 2)%}
+			<img src="static/company_logos/nausys.png" style="width:100px;">
+		{% endif %}
+		</td>
+	</tr>
+	<tr>
+		<td>Name - <strong>{{boat.params["Name"]}}</strong></td>
+		<td>Model - <strong>{{boat.params["Model"]}}({{boat.params["Type"]}})</strong></td>
+	</tr>
+	<tr>
+		<td>Year of production - <strong>{{boat.params["Year"]}}</strong></td>
+		<td>Length - <strong>{{boat.params["Length"]}}</strong></td>
+	</tr>
+	<tr>
+		<td>Cabins - <strong>{{boat.params.get("Single cabins", 0)|int + boat.params.get("Double cabins", 0)|int}}</strong></td>
+		<td>WC - <strong>{{boat.params["WC / Shower"]}}</strong></td>
+	</tr>
+	<tr>
+		<td colspan="2">Berths - <strong>{{boat.params["Berths"]}}</strong></td>
+	</tr>
+	<tr>
+		<td colspan="2">Price - <strong style="text-decoration:line-through;">{{boat.price_from_pricelist|curency_format}}</strong> 
+								<strong style="color: red; font-size: larger;">{{boat.price_for_client|curency_format}}</strong>
+								<strong style="color: red;">( -{{boat.discount}}% )</strong></td>
+	</tr>
+	<tr>
+		<td colspan="2"><a href='yacht_detail?source_place={{search_filter.source_place}}&id_place={{search_filter.IDsForPlaces[boat.id_operator]["id"]}}&level_place={{search_filter.IDsForPlaces[boat.id_operator]["level"]}}&depart_date={{search_filter.GetDepartDate().strftime('%Y-%m-%d')}}&count_week={{search_filter.count_week}}&id_operator={{boat.id_operator}}&id_boat={{boat.local_operator_id}}'>Book</a></td>
+	</tr>
+</table>
+{% endfor %}

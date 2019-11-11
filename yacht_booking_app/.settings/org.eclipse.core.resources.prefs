@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+encoding//apis/api_nausys.py=utf-8
+encoding//apis/api_sedna.py=utf-8
+encoding//forall/boat.py=utf-8
+encoding//forall/boat_from_db.py=utf-8
+encoding//forall/boat_model.py=utf-8
+encoding//forall/fleet_operator.py=utf-8
+encoding//forall/operator.py=utf-8
+encoding//forall/places.py=utf-8
+encoding//forall/search_filter.py=utf-8
+encoding//forall/search_filter_one_boat.py=utf-8
+encoding//forall/search_result.py=utf-8
+encoding/db.py=utf-8
+encoding/login.py=utf-8
+encoding/service.py=utf-8
+encoding/smart_get_config.py=utf-8
+encoding/syncer.py=utf-8
